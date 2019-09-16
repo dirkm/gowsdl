@@ -81,22 +81,24 @@ var typesTmpl = `
 			{{if .SimpleType}}
 				{{if .Doc}} {{.Doc | comment}} {{end}}
 				{{if ne .SimpleType.List.ItemType ""}}
-					{{ .Name | makeFieldPublic}} []{{toGoType .SimpleType.List.ItemType}} ` + "`" + `xml:"{{.Name}},omitempty"` + "`" + `
+					{{ .Name | makeFieldPublic}} []{{toGoType .SimpleType.List.ItemType}} ` + "`" + `xml:"{{getTargetNamespace}} {{.Name}},omitempty"` + "`" + `
 				{{else}}
-					{{ .Name | makeFieldPublic}} {{toGoType .SimpleType.Restriction.Base}} ` + "`" + `xml:"{{.Name}},omitempty"` + "`" + `
+					{{ .Name | makeFieldPublic}} {{toGoType .SimpleType.Restriction.Base}} ` + "`" + `xml:"{{getTargetNamespace}} {{.Name}},omitempty"` + "`" + `
 				{{end}}
 			{{else}}
 				{{template "ComplexTypeInline" .}}
 			{{end}}
 		{{else}}
 			{{if .Doc}}{{.Doc | comment}} {{end}}
-			{{replaceReservedWords .Name | makeFieldPublic}} {{if eq .MaxOccurs "unbounded"}}[]{{end}}{{.Type | toGoType}} ` + "`" + `xml:"{{.Name}},omitempty"` + "`" + ` {{end}}
+			{{replaceReservedWords .Name | makeFieldPublic}} {{if eq .MaxOccurs "unbounded"}}[]{{end}}{{.Type | toGoType}} ` + "`" + `xml:"{{getTargetNamespace}} {{.Name}},omitempty"` + "`" + ` {{end}}
 		{{end}}
 	{{end}}
 {{end}}
 
 {{range .Schemas}}
 	{{ $targetNamespace := .TargetNamespace }}
+
+	{{setTargetNamespace $targetNamespace}} 
 
 	{{range .SimpleType}}
 		{{template "SimpleType" .}}
@@ -148,5 +150,8 @@ var typesTmpl = `
 			{{end}}
 		}
 	{{end}}
+
+	{{setTargetNamespace ""}} 
+
 {{end}}
 `

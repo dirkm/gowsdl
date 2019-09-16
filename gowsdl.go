@@ -254,7 +254,23 @@ func (g *GoWSDL) resolveXSDExternals(schema *XSDSchema, loc *Location) error {
 	return nil
 }
 
+var (
+	globalTargetNamespace = ""
+)
+
+func setTargetNamespace(ns string) string {
+	globalTargetNamespace = ns
+	log.Printf("got target namespace" + ns)
+	return ""
+}
+
+func getTargetNamespace() string {
+	log.Printf("gettargetnamespace " + globalTargetNamespace)
+	return globalTargetNamespace
+}
+
 func (g *GoWSDL) genTypes() ([]byte, error) {
+
 	funcMap := template.FuncMap{
 		"toGoType":              toGoType,
 		"stripns":               stripns,
@@ -266,6 +282,8 @@ func (g *GoWSDL) genTypes() ([]byte, error) {
 		"goString":              goString,
 		"findNameByType":        g.findNameByType,
 		"removePointerFromType": removePointerFromType,
+		"setTargetNamespace":    setTargetNamespace,
+		"getTargetNamespace":    getTargetNamespace,
 	}
 
 	data := new(bytes.Buffer)

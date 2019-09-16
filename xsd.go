@@ -6,6 +6,7 @@ package gowsdl
 
 import (
 	"encoding/xml"
+	"log"
 )
 
 const xmlschema11 = "http://www.w3.org/2001/XMLSchema"
@@ -91,12 +92,14 @@ Loop:
 				if err := d.DecodeElement(x, &t); err != nil {
 					return err
 				}
+				log.Printf("received complexType %+v", x)
 				s.ComplexTypes = append(s.ComplexTypes, x)
 			case "simpleType":
 				x := new(XSDSimpleType)
 				if err := d.DecodeElement(x, &t); err != nil {
 					return err
 				}
+				log.Printf("received simpleType %+v", x)
 				s.SimpleType = append(s.SimpleType, x)
 			default:
 				d.Skip()
