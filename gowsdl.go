@@ -263,8 +263,12 @@ func (g *GoWSDL) genTypes() ([]byte, error) {
 		return ""
 	}
 
-	getTargetNamespace := func() string {
-		return globalTargetNamespace
+	getQualifiedName := func(name string) string {
+		if globalTargetNamespace != "" {
+			return globalTargetNamespace + " " + name
+		} else {
+			return name
+		}
 	}
 
 	funcMap := template.FuncMap{
@@ -279,7 +283,7 @@ func (g *GoWSDL) genTypes() ([]byte, error) {
 		"findNameByType":        g.findNameByType,
 		"removePointerFromType": removePointerFromType,
 		"setTargetNamespace":    setTargetNamespace,
-		"getTargetNamespace":    getTargetNamespace,
+		"getQualifiedName":      getQualifiedName,
 	}
 
 	data := new(bytes.Buffer)
