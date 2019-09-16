@@ -254,20 +254,18 @@ func (g *GoWSDL) resolveXSDExternals(schema *XSDSchema, loc *Location) error {
 	return nil
 }
 
-var (
-	globalTargetNamespace = ""
-)
-
-func setTargetNamespace(ns string) string {
-	globalTargetNamespace = ns
-	return ""
-}
-
-func getTargetNamespace() string {
-	return globalTargetNamespace
-}
-
 func (g *GoWSDL) genTypes() ([]byte, error) {
+
+	globalTargetNamespace := ""
+
+	setTargetNamespace := func(ns string) string {
+		globalTargetNamespace = ns
+		return ""
+	}
+
+	getTargetNamespace := func() string {
+		return globalTargetNamespace
+	}
 
 	funcMap := template.FuncMap{
 		"toGoType":              toGoType,
