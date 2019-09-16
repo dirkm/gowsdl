@@ -260,12 +260,10 @@ var (
 
 func setTargetNamespace(ns string) string {
 	globalTargetNamespace = ns
-	log.Printf("got target namespace" + ns)
 	return ""
 }
 
 func getTargetNamespace() string {
-	log.Printf("gettargetnamespace " + globalTargetNamespace)
 	return globalTargetNamespace
 }
 
