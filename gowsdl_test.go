@@ -53,7 +53,7 @@ func TestComplexTypeWithInlineSimpleType(t *testing.T) {
 	expected := `type GetInfo struct {
 	XMLName	xml.Name	` + "`" + `xml:"http://www.mnb.hu/webservices/ GetInfo"` + "`" + `
 
-	Id	string	` + "`" + `xml:"Id,omitempty"` + "`" + `
+	Id	string	` + "`" + `xml:"http://www.mnb.hu/webservices/ Id,omitempty"` + "`" + `
 }`
 	if actual != expected {
 		t.Error("got " + actual + " want " + expected)

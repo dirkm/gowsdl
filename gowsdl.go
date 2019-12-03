@@ -279,7 +279,7 @@ func (g *GoWSDL) genTypes() ([]byte, error) {
 		"makeFieldPublic":       makePublic,
 		"comment":               comment,
 		"removeNS":              removeNS,
-		"goString":              goString,
+		"goPrimitive":           goPrimitive,
 		"findNameByType":        g.findNameByType,
 		"removePointerFromType": removePointerFromType,
 		"setTargetNamespace":    setTargetNamespace,
@@ -387,8 +387,12 @@ func normalize(value string) string {
 	return strings.Map(mapping, value)
 }
 
-func goString(s string) string {
-	return strings.Replace(s, "\"", "\\\"", -1)
+func goPrimitive(base string, s string) string {
+	if strings.Contains(toGoType(base), "int") {
+		return s
+	} else {
+		return "\"" + strings.Replace(s, "\"", "\\\"", -1) + "\""
+	}
 }
 
 var xsd2GoTypes = map[string]string{
@@ -580,7 +584,7 @@ var basicTypes = map[string]string{
 }
 
 func isBasicType(identifier string) bool {
-	if _, exsits := basicTypes[identifier]; exsits {
+	if _, exists := basicTypes[identifier]; exists {
 		return true
 	}
 	return false

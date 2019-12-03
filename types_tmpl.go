@@ -19,11 +19,12 @@ var typesTmpl = `
 	{{end}}
 
 	{{if .Restriction.Enumeration}}
+    {{ $base := .Restriction.Base}}
 	const (
 		{{with .Restriction}}
 			{{range .Enumeration}}
 				{{if .Doc}} {{.Doc | comment}} {{end}}
-				{{$type}}{{$value := replaceReservedWords .Value}}{{$value | makePublic}} {{$type}} = "{{goString .Value}}" {{end}}
+				{{$type}}{{$value := replaceReservedWords .Value}}{{$value | makePublic}} {{$type}} = {{goPrimitive $base .Value}} {{end}}
 		{{end}}
 	)
 	{{end}}
