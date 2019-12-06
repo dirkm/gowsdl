@@ -419,6 +419,7 @@ var xsd2GoTypes = map[string]string{
 	"anytype":         "interface{}",
 	"positiveinteger": "uint64",
 	"anyuri":          "string",
+	"gyearmonth":      "string",
 }
 
 func removeNS(xsdType string) string {
