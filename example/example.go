@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/hooklift/gowsdl/example/gen"
-	"github.com/hooklift/gowsdl/soap"
+	"github.com/dirkm/gowsdl/example/gen"
+	"github.com/dirkm/gowsdl/soap"
 )
 
 func ExampleBasicUsage() {

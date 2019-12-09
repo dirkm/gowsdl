@@ -6,6 +6,13 @@
 
 Generates Go code from a WSDL file.
 
+### WARNING
+
+This is fork to make some of my projects compile. You probably want to look at https://github.com/hooklift/gowsdl for the original code.
+I will try to merge my changes back in the  original project one day.
+
+The module change has been done, because I could not figure out how to clone a repo without changing the project url in go 1.12
+
 ### Install
 
 * [Download binary release](https://github.com/hooklift/gowsdl/releases)
